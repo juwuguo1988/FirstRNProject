@@ -18,7 +18,7 @@ class HomeTableView extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {selectedButton: 0, selectedPage: 0, dataSource: null, realm: null};
+        this.state = {selectedButton: 0, selectedPage: 0, dataSource: null, realm: null, disPlaySource: null};
         this.selectionOnPress = this.selectionOnPress.bind(this)
         this.onPageSelected = this.onPageSelected.bind(this)
     }
@@ -88,6 +88,10 @@ class HomeTableView extends Component {
                                 this.getAllMedicPlan()
                             }}>>
                         </RadiusButton>
+                        {!!this.state.disPlaySource ? <ListView
+                            dataSource={this.state.disPlaySource}
+                            renderRow={(medicPlans) => this._renderNewRow(medicPlans)}
+                        /> : <View/>}
                     </View>
                     <View style={homeStyles.pageStyle}>
                         <Text style={homeStyles.tabTextStyle}>健康</Text>
@@ -162,6 +166,18 @@ class HomeTableView extends Component {
         )
     }
 
+    _renderNewRow = (rowData) => {
+        return (
+            <TouchableOpacity style={homeStyles.cellContainer} onPress={() => {
+            }}>
+                <Text style={homeStyles.tabBottomTextStyle} numberOfLines={1}
+                      ellipsizeMode={'tail'}>{rowData.medicineName}</Text>
+                <Text style={homeStyles.tabBottomTextStyle}>{rowData.takeAt}</Text>
+                <Text style={homeStyles.tabBottomTextStyle}>{rowData.dosage}</Text>
+            </TouchableOpacity>
+        )
+    }
+
     getMedicInfo() {
         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         //DataSource()可以接收四种参数
@@ -216,10 +232,9 @@ class HomeTableView extends Component {
     }
 
     getAllMedicPlan() {
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         let medicPlans = this.state.realm.objects('MedicPlan');
-        console.log('======>:' + medicPlans.length)
-
-        console.log('======>:' + medicPlans[0].medicineName)
+        this.setState({disPlaySource: ds.cloneWithRows(medicPlans)})
     }
 
     initRealmDataBase() {
