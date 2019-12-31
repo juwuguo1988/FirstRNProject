@@ -68,7 +68,7 @@ class Register extends Component {
         // 请求参数 ('key',value)
         formData.append("grant_type", "password");
         formData.append("username", "17710189466");
-        formData.append("password", "123456");
+        formData.append("password", "654321");
         formData.append("device_type", "android");
         // 登录的时候添加一下leanCloud 生成的设备id用于推送:
         // AVInstallation.getCurrentInstallation().getInstallationId();

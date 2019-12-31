@@ -65,6 +65,7 @@ class HomeTableView extends Component {
                             }}>>
                         </RadiusButton>
                         {!!this.state.dataSource ? <ListView
+                            showsVerticalScrollIndicator={false}
                             dataSource={this.state.dataSource}
                             renderRow={(plans) => this._renderRow(plans)}
                         /> : <View/>}
@@ -89,6 +90,7 @@ class HomeTableView extends Component {
                             }}>>
                         </RadiusButton>
                         {!!this.state.disPlaySource ? <ListView
+                            showsVerticalScrollIndicator={false}
                             dataSource={this.state.disPlaySource}
                             renderRow={(medicPlans) => this._renderNewRow(medicPlans)}
                         /> : <View/>}
